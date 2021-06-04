@@ -6,9 +6,9 @@ run:
 
 linters-settings:
   goimports:
-    local-prefixes: github.com/omegion/go-cli
+    local-prefixes: github.com/omegion/cobra-commander
   gci:
-    local-prefixes: github.com/omegion/go-cli
+    local-prefixes: github.com/omegion/cobra-commander
   govet:
     check-shadowing: true
   misspell:

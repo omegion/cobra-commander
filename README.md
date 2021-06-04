@@ -9,27 +9,27 @@ GO CLI Application Template
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/github/workflow/status/omegion/go-cli-template/Test" alt="Test"></a>
-    <img src="https://coveralls.io/repos/github/omegion/go-cli-template/badge.svg?branch=master" alt="Coverall"></a>
-    <img src="https://goreportcard.com/badge/github.com/omegion/go-cli-template" alt="Report"></a>
-    <a href="http://pkg.go.dev/github.com/omegion/go-cli-template"><img src="https://img.shields.io/badge/pkg.go.dev-doc-blue" alt="Doc"></a>
-    <a href="https://github.com/omegion/go-cli-template/blob/master/LICENSE"><img src="https://img.shields.io/github/license/omegion/go-cli-template" alt="License"></a>
+    <img src="https://img.shields.io/github/workflow/status/omegion/cobra-commander-template/Test" alt="Test"></a>
+    <img src="https://coveralls.io/repos/github/omegion/cobra-commander-template/badge.svg?branch=master" alt="Coverall"></a>
+    <img src="https://goreportcard.com/badge/github.com/omegion/cobra-commander-template" alt="Report"></a>
+    <a href="http://pkg.go.dev/github.com/omegion/cobra-commander-template"><img src="https://img.shields.io/badge/pkg.go.dev-doc-blue" alt="Doc"></a>
+    <a href="https://github.com/omegion/cobra-commander-template/blob/master/LICENSE"><img src="https://img.shields.io/github/license/omegion/cobra-commander-template" alt="License"></a>
 </p>
 
 ```shell
 Go CLI application template for Go projects.
 
 Usage:
-  go-cli [command]
+  cobra-commander [command]
 
 Available Commands:
   help        Help about any command
   version     Print the version/build number
 
 Flags:
-  -h, --help   help for go-cli
+  -h, --help   help for cobra-commander
 
-Use "go-cli [command] --help" for more information about a command.
+Use "cobra-commander [command] --help" for more information about a command.
 ```
 
 ## Requirements
