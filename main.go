@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +38,8 @@ func (c *Commander) setLogger() {
 	logLevel, _ := c.Root.Flags().GetString("logLevel")
 	logFormat, _ := c.Root.Flags().GetString("logFormat")
 
-	InitLogger(logLevel, logFormat)
+	log.SetFormatter(CreateFormatter(logFormat))
+	log.SetLevel(createLogLevel(logLevel))
 }
 
 // Init is entrypoint for the commands.
