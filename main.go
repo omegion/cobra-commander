@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -31,21 +30,14 @@ func (c *Commander) SetPersistentFlags(p func(c *Commander)) *Commander {
 
 func (c *Commander) setDefaultFlags() {
 	c.Root.PersistentFlags().String("logLevel", "info", "Set the logging level. One of: debug|info|warn|error")
+	c.Root.PersistentFlags().String("logFormat", "text", "Set the logging format. One of: text|json (default \"text\")")
 }
 
 func (c *Commander) setLogger() {
 	logLevel, _ := c.Root.Flags().GetString("logLevel")
+	logFormat, _ := c.Root.Flags().GetString("logFormat")
 
-	level, err := log.ParseLevel(logLevel)
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	log.SetLevel(level)
-	log.SetFormatter(&log.TextFormatter{
-		TimestampFormat: "02-01-2006 15:04:05",
-		FullTimestamp:   true,
-	})
+	InitLogger(logLevel, logFormat)
 }
 
 // Init is entrypoint for the commands.
@@ -55,10 +47,6 @@ func (c *Commander) Init() *Commander {
 	})
 
 	c.setDefaultFlags()
-
-	c.SetPersistentFlags(func(c *Commander) {
-		c.Root.PersistentFlags().String("test", "info", "Set the logging level. One of: debug|info|warn|error")
-	})
 
 	return c
 }

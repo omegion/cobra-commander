@@ -51,10 +51,12 @@ func TestCommander_Setup(t *testing.T) {
 	_, err := commander.Root.ExecuteC()
 
 	expectedLogLevelFlag, _ := commander.Root.Flags().GetString("logLevel")
+	expectedLogFormatFlag, _ := commander.Root.Flags().GetString("logFormat")
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, "info", log.GetLevel().String())
 	assert.Equal(t, "info", expectedLogLevelFlag)
+	assert.Equal(t, "text", expectedLogFormatFlag)
 }
 
 func TestCommander_SetPersistentFlags(t *testing.T) {
