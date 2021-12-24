@@ -3,10 +3,11 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	log "github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"os"
 	"path"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -15,10 +16,12 @@ const (
 	defaultConfigFileType = "yml"
 )
 
+// Config is a struct for CLI configuration.
 type Config struct {
 	Name *string
 }
 
+// Init inits Config.
 func (c *Config) Init() *Config {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -56,6 +59,10 @@ func (c *Config) ensureConfig(configPath string) error {
 	_, err := os.Stat(configFilePath)
 	if errors.Is(err, os.ErrNotExist) {
 		err = os.MkdirAll(path.Dir(configFilePath), os.ModePerm)
+		if err != nil {
+			return err
+		}
+
 		if err := viper.SafeWriteConfig(); err != nil {
 			return err
 		}

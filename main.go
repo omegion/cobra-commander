@@ -42,7 +42,11 @@ func (c *Commander) setDefaultFlags() {
 	c.Root.PersistentFlags().String("logFormat", "text", "Set the logging format. One of: text|json (default \"text\")")
 
 	if c.Config != nil {
-		c.Root.PersistentFlags().String("config", "", "config file (default is $EXAMPLECONFIG or $HOME/.example-config/config.yaml)")
+		c.Root.PersistentFlags().String(
+			"config",
+			"",
+			"config file (default is $EXAMPLECONFIG or $HOME/.example-config/config.yaml)",
+		)
 	}
 }
 
