@@ -73,6 +73,17 @@ func (c *Commander) Init() *Commander {
 
 	c.setDefaultFlags()
 
+	c.Root.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
+		if c.Config != nil {
+			err := c.Config.bindFlags(cmd)
+			if err != nil {
+				return err
+			}
+		}
+
+		return nil
+	}
+
 	return c
 }
 

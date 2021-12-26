@@ -11,7 +11,7 @@ lint:
 	gofmt -l . | tee $(BUFFER)
 	@! test -s $(BUFFER)
 	go vet ./...
-	go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.40.1
+	go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
 	@golangci-lint --version
 	golangci-lint run --fix
 	go get -u golang.org/x/lint/golint
