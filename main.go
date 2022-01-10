@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -47,7 +45,7 @@ func (c *Commander) setDefaultFlags() {
 		c.Root.PersistentFlags().String(
 			"config",
 			"",
-			fmt.Sprintf("config file (default is $HOME/.%s/%s.yaml)", *c.Config.Name, defaultConfigFileName),
+			"config file (default is ~/.<YOUR_CONFIG_NAME>/<CONFIG_FILE_NAME>.<CONFIG_FILE_TYPE>)",
 		)
 	}
 }

@@ -16,7 +16,7 @@ import (
 const (
 	defaultConfigDirectoryName = "commander"
 	defaultConfigFileName      = "config"
-	defaultConfigFileType      = "yml"
+	defaultConfigFileType      = "yaml"
 )
 
 // Config is a struct for CLI configuration.
@@ -36,28 +36,28 @@ func (c *Config) Init() *Config {
 	}
 
 	configName := defaultConfigDirectoryName
-	if c.Name != nil {
-		configName = *c.Name
+	if c.Name == nil {
+		c.Name = &configName
 	}
 
 	configPath := path.Join(home, fmt.Sprintf(".%s", configName))
-	if c.Path != nil {
-		configPath = *c.Path
+	if c.Path == nil {
+		c.Path = &configPath
 	}
 
 	configFileName := defaultConfigFileName
-	if c.FileName != nil {
-		configFileName = *c.FileName
+	if c.FileName == nil {
+		c.FileName = &configFileName
 	}
 
 	configFileType := defaultConfigFileType
-	if c.FileType != nil {
-		configFileType = *c.FileType
+	if c.FileType == nil {
+		c.FileType = &configFileType
 	}
 
-	viper.AddConfigPath(configPath)
-	viper.SetConfigName(configFileName)
-	viper.SetConfigType(configFileType)
+	viper.AddConfigPath(*c.Path)
+	viper.SetConfigName(*c.FileName)
+	viper.SetConfigType(*c.FileType)
 
 	if c.EnvironmentPrefix != nil {
 		viper.SetEnvPrefix(*c.EnvironmentPrefix)
@@ -65,7 +65,7 @@ func (c *Config) Init() *Config {
 
 	viper.AutomaticEnv()
 
-	err = c.ensureConfig(configPath)
+	err = c.ensureConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -78,8 +78,12 @@ func (c *Config) Init() *Config {
 	return c
 }
 
-func (c *Config) ensureConfig(configPath string) error {
-	configFilePath := path.Join(configPath, fmt.Sprintf("%s.%s", defaultConfigFileName, defaultConfigFileType))
+func (c *Config) getConfigFilePath() string {
+	return fmt.Sprintf("%s%s.%s", *c.Path, *c.FileName, *c.FileType)
+}
+
+func (c *Config) ensureConfig() error {
+	configFilePath := c.getConfigFilePath()
 
 	_, err := os.Stat(configFilePath)
 	if errors.Is(err, os.ErrNotExist) {
