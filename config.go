@@ -14,14 +14,16 @@ import (
 )
 
 const (
-	defaultConfigName     = "commander"
-	defaultConfigFileName = "config"
-	defaultConfigFileType = "yml"
+	defaultConfigDirectoryName = "commander"
+	defaultConfigFileName      = "config"
+	defaultConfigFileType      = "yml"
 )
 
 // Config is a struct for CLI configuration.
 type Config struct {
 	Name              *string
+	FileName          *string
+	FileType          *string
 	Path              *string
 	EnvironmentPrefix *string
 }
@@ -33,7 +35,7 @@ func (c *Config) Init() *Config {
 		log.Fatalf("can't compose the default config file path: %v", err)
 	}
 
-	configName := defaultConfigName
+	configName := defaultConfigDirectoryName
 	if c.Name != nil {
 		configName = *c.Name
 	}
@@ -43,9 +45,19 @@ func (c *Config) Init() *Config {
 		configPath = *c.Path
 	}
 
+	configFileName := defaultConfigFileName
+	if c.FileName != nil {
+		configFileName = *c.FileName
+	}
+
+	configFileType := defaultConfigFileType
+	if c.FileType != nil {
+		configFileType = *c.FileType
+	}
+
 	viper.AddConfigPath(configPath)
-	viper.SetConfigName(defaultConfigFileName)
-	viper.SetConfigType(defaultConfigFileType)
+	viper.SetConfigName(configFileName)
+	viper.SetConfigType(configFileType)
 
 	if c.EnvironmentPrefix != nil {
 		viper.SetEnvPrefix(*c.EnvironmentPrefix)
