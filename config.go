@@ -22,6 +22,7 @@ const (
 // Config is a struct for CLI configuration.
 type Config struct {
 	Name              *string
+	Path              *string
 	EnvironmentPrefix *string
 }
 
@@ -38,6 +39,9 @@ func (c *Config) Init() *Config {
 	}
 
 	configPath := path.Join(home, fmt.Sprintf(".%s", configName))
+	if c.Path != nil {
+		configPath = *c.Path
+	}
 
 	viper.AddConfigPath(configPath)
 	viper.SetConfigName(defaultConfigFileName)
