@@ -40,7 +40,7 @@ func (c *Config) Init() *Config {
 		c.Name = &configName
 	}
 
-	configPath := path.Join(home, fmt.Sprintf(".%s", configName))
+	configPath := path.Join(home, fmt.Sprintf(".%s", *c.Name))
 	if c.Path == nil {
 		c.Path = &configPath
 	}
@@ -79,7 +79,7 @@ func (c *Config) Init() *Config {
 }
 
 func (c *Config) getConfigFilePath() string {
-	return fmt.Sprintf("%s%s.%s", *c.Path, *c.FileName, *c.FileType)
+	return fmt.Sprintf("%s.%s", path.Join(*c.Path, *c.FileName), *c.FileType)
 }
 
 func (c *Config) ensureConfig() error {
