@@ -22,7 +22,7 @@ func CreateFormatter(logFormat string) logrus.Formatter {
 		formatType = &logrus.TextFormatter{
 			TimestampFormat: "02-01-2006 15:04:05",
 			FullTimestamp:   true,
-			ForceColors:     true,
+			DisableColors:   true,
 		}
 	default:
 		formatType = &logrus.TextFormatter{}
