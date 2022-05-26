@@ -60,6 +60,12 @@ func (c *Commander) setLogger() {
 
 func (c *Commander) setConfig() {
 	if c.Config != nil {
+		config, _ := c.Root.Flags().GetString("config")
+
+		if config != "" {
+			c.Config.Path = &config
+		}
+
 		c.Config.Init()
 	}
 }

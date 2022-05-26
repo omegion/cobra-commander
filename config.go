@@ -26,6 +26,7 @@ type Config struct {
 	FileType          *string
 	Path              *string
 	EnvironmentPrefix *string
+	Flags             *pflag.FlagSet
 }
 
 // Init inits Config.
@@ -43,32 +44,39 @@ func (c *Config) Init() *Config {
 	configPath := path.Join(home, fmt.Sprintf(".%s", *c.Name))
 	if c.Path == nil {
 		c.Path = &configPath
+
+		configFileName := defaultConfigFileName
+		if c.FileName == nil {
+			c.FileName = &configFileName
+		}
+
+		configFileType := defaultConfigFileType
+		if c.FileType == nil {
+			c.FileType = &configFileType
+		}
+
+		viper.AddConfigPath(*c.Path)
+		viper.SetConfigName(*c.FileName)
+		viper.SetConfigType(*c.FileType)
+
+		err = c.ensureConfig()
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		viper.SetConfigFile(*c.Path)
 	}
 
-	configFileName := defaultConfigFileName
-	if c.FileName == nil {
-		c.FileName = &configFileName
+	err = viper.BindPFlags(c.Flags)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	configFileType := defaultConfigFileType
-	if c.FileType == nil {
-		c.FileType = &configFileType
-	}
-
-	viper.AddConfigPath(*c.Path)
-	viper.SetConfigName(*c.FileName)
-	viper.SetConfigType(*c.FileType)
 
 	if c.EnvironmentPrefix != nil {
 		viper.SetEnvPrefix(*c.EnvironmentPrefix)
 	}
 
 	viper.AutomaticEnv()
-
-	err = c.ensureConfig()
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	err = viper.ReadInConfig()
 	if err != nil {
